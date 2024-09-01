@@ -40,18 +40,24 @@ const CustomButton = ({
   ...props
 }: ButtonProps) => {
   return (
-    <Pressable
-      android_ripple={{ color: "white", borderless: true }}
-      onPress={onPress}
-      className={`w-full rounded-full p-3 flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${className}`}
+    <View
+      className={`overflow-hidden rounded-full ${className} shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)}`}
       {...props}
     >
-      {IconLeft && <IconLeft />}
-      <Text className={`text-lg font-bold ${getTextVariantStyle(textVariant)}`}>
-        {title}
-      </Text>
-      {IconRight && <IconRight />}
-    </Pressable>
+      <Pressable
+        android_ripple={{ color: "white" }}
+        onPress={onPress}
+        className={`w-full p-3 flex-row justify-center items-center`}
+      >
+        {IconLeft && <IconLeft />}
+        <Text
+          className={`font-bold ${getTextVariantStyle(textVariant)}`}
+        >
+          {title}
+        </Text>
+        {IconRight && <IconRight />}
+      </Pressable>
+    </View>
   );
 };
 
