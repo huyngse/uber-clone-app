@@ -10,12 +10,13 @@ export const generateMarkersFromData = ({
     data: Driver[];
     userLatitude: number;
     userLongitude: number;
-}) => {
-    return data.map((driver) => {
+}): MarkerData[] => {
+    return data.map((driver, index) => {
         const latOffset = (Math.random() - 0.5) * 0.01; // Random offset between -0.005 and 0.005
         const lngOffset = (Math.random() - 0.5) * 0.01; // Random offset between -0.005 and 0.005
 
         return {
+            id: index,
             latitude: userLatitude + latOffset,
             longitude: userLongitude + lngOffset,
             title: `${driver.first_name} ${driver.last_name}`,
