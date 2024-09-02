@@ -9,6 +9,7 @@ import { Link, router } from "expo-router";
 import OAuth from "@/components/OAuth";
 import { useSignUp } from "@clerk/clerk-expo";
 import ReactNativeModal from "react-native-modal";
+import { fetchAPI } from "@/lib/fetch";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -57,7 +58,14 @@ const SignUp = () => {
       });
 
       if (completeSignUp.status === "complete") {
-        //TODO create db user
+        await fetchAPI('/(api)/user', {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId
+          })
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification((prev) => ({ ...prev, state: "success" }));
         setShowSuccessModal(true);
@@ -108,7 +116,7 @@ const SignUp = () => {
           />
           <InputField
             label="Password"
-            placeholder="Enter your name"
+            placeholder="Enter your password"
             icon={icons.lock}
             value={form.password}
             secureTextEntry
